@@ -1,11 +1,11 @@
 <?php
 
 require_once( dirname(__FILE__).'/../_task/task.php' );
-eval( getPluginConf( 'checksfv' ) );
+eval( FileUtil::getPluginConf( 'checksfv' ) );
 
 $ret = array( "status"=>255, "errors"=>array("Can't retrieve information") );
 
-if(isset($_REQUEST['hash']) && 
+if(isset($_REQUEST['hash']) &&
 	isset($_REQUEST['no']) &&
 	isset($_REQUEST['cmd']))
 {
@@ -30,14 +30,14 @@ if(isset($_REQUEST['hash']) &&
 				{
 					$commands = array();
 					$task = new rTask( array
-					( 
-						'arg'=>call_user_func('end',explode('/',$filename)),					
+					(
+						'arg'=>call_user_func('end',explode('/',$filename)),
 						'requester'=>'checksfv',
-						'name'=>'checksfv', 
-						'hash'=>$_REQUEST['hash'], 
-						'no'=>$_REQUEST['no'] 
-					) );					
-					$commands[] = getExternal("cksfv")." -g ".escapeshellarg($filename);
+						'name'=>'checksfv',
+						'hash'=>$_REQUEST['hash'],
+						'no'=>$_REQUEST['no']
+					) );
+					$commands[] = Utility.getExternal("cksfv")." -g ".escapeshellarg($filename);
 					$ret = $task->start($commands, rTask::FLG_ONE_LOG);
 				}
 			}
@@ -46,4 +46,4 @@ if(isset($_REQUEST['hash']) &&
 	}
 }
 
-cachedEcho(json_encode($ret),"application/json");
+cachedEcho::send(json_encode($ret),"application/json");
