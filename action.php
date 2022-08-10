@@ -37,7 +37,7 @@ if(isset($_REQUEST['hash']) &&
 						'hash'=>$_REQUEST['hash'],
 						'no'=>$_REQUEST['no']
 					) );
-					$commands[] = Utility.getExternal("cksfv")." -g ".escapeshellarg($filename);
+					$commands[] = Utility::getExternal("cksfv")." -g ".escapeshellarg($filename);
 					$ret = $task->start($commands, rTask::FLG_ONE_LOG);
 				}
 			}
